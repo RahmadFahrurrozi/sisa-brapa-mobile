@@ -26,9 +26,8 @@ function RootLayoutNav() {
   // 1. Jalankan pengecekan token (hydrate) sekali saja saat aplikasi dibuka
   useEffect(() => {
     hydrate();
-  }, []);
+  }, [hydrate]);
 
-  // 2. Auth Guard: Pantau status login dan rute yang sedang diakses
   // 2. Auth Guard: Pantau status login dan rute yang sedang diakses
   useEffect(() => {
     if (isLoading) return; // Jangan lakukan apa-apa selagi masih mengecek storage
@@ -48,7 +47,7 @@ function RootLayoutNav() {
       }, 1);
       return () => clearTimeout(timer);
     }
-  }, [isAuthenticated, isLoading, segments]);
+  }, [isAuthenticated, isLoading, segments, router]);
 
   // Jika sedang mengecek token, tampilkan loading screen sederhana
   if (isLoading) {
@@ -65,6 +64,9 @@ function RootLayoutNav() {
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       {/* Grup halaman auth login/register */}
       <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      {/* Detail & Pencatatan Transaksi */}
+      <Stack.Screen name="expense/new" options={{ headerShown: false }} />
+      <Stack.Screen name="expense/[id]" options={{ headerShown: false }} />
       {/* Modal */}
       <Stack.Screen
         name="modal"
